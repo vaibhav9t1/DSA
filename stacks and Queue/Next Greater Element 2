@@ -1,0 +1,30 @@
+
+
+class Solution {
+public:
+    vector<int> nextGreaterElements(vector<int>& arr) {
+       stack<int> st;
+       st.push(-1);
+       vector<int> res(arr.size(),0);
+
+        int n = arr.size();
+
+        for(int i=2*n-1;i>=0;i--){
+            
+            if(st.size()>1){
+                while(st.size()>1 && st.top()<=arr[i%n]){
+                    st.pop();
+                }
+            }
+
+            
+            res[i%n] = st.top();
+           
+
+            st.push(arr[i%n]);
+        }
+
+        return res;
+    
+    }
+};
