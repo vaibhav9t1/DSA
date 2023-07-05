@@ -1,0 +1,58 @@
+ void merge(int arr[], int l, int m, int r)
+    {
+         // Your code here
+         auto const subArrayOne = m - l + 1;
+    auto const subArrayTwo = r - m;
+  
+    
+    auto *leftArray = new int[subArrayOne],
+         *rightArray = new int[subArrayTwo];
+  
+   
+    for (auto i = 0; i < subArrayOne; i++)
+        leftArray[i] = arr[l + i];
+    for (auto j = 0; j < subArrayTwo; j++)
+        rightArray[j] = arr[m + 1 + j];
+  
+    auto indexOfSubArrayOne = 0, 
+        indexOfSubArrayTwo = 0; 
+    int indexOfMergedArray = l; 
+  
+    // Merge the temp arrays back into array[left..right]
+    while (indexOfSubArrayOne < subArrayOne && indexOfSubArrayTwo < subArrayTwo) {
+        if (leftArray[indexOfSubArrayOne] <= rightArray[indexOfSubArrayTwo]) {
+            arr[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+            indexOfSubArrayOne++;
+        }
+        else {
+            arr[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+            indexOfSubArrayTwo++;
+        }
+        indexOfMergedArray++;
+    }
+  
+    while (indexOfSubArrayOne < subArrayOne) {
+        arr[indexOfMergedArray] = leftArray[indexOfSubArrayOne];
+        indexOfSubArrayOne++;
+        indexOfMergedArray++;
+    }
+
+    while (indexOfSubArrayTwo < subArrayTwo) {
+        arr[indexOfMergedArray] = rightArray[indexOfSubArrayTwo];
+        indexOfSubArrayTwo++;
+        indexOfMergedArray++;
+    }
+    }
+    public:
+    void mergeSort(int arr[], int l, int r)
+    {
+        //code here
+        
+        if (l >= r)
+        return; 
+  
+    auto mid = l + (r - l) / 2;
+    mergeSort(arr, l, mid);
+    mergeSort(arr, mid+1, r);
+    merge(arr, l, mid, r);
+    }
