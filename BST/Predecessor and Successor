@@ -1,0 +1,43 @@
+void findPreSuc(Node* root1, Node*& pre, Node*& suc, int key)
+    {
+          Node* successor = NULL;
+          Node* predessor = NULL;
+          Node* root = root1;
+
+        // Code to find Predecessor
+        // Find out the least element below the key element and move towards key as possible
+
+        while(root){
+            
+            if(root->key >= key){
+                root = root->left;
+            }
+            else if(root->key < key){
+                predessor = root;
+                // cout << pre->key<<" ";
+                root = root->right;
+            }
+            
+        }
+        root = root1;
+
+        // Code to find the Successor
+        // Store the every greater element than the key and move towards the key element
+
+         while(root){
+            
+            if(root->key > key){
+                successor = root;
+                root = root->left;
+            }
+            else if(root->key <= key){
+                // cout << pre->key<<" ";
+                root = root->right;
+            }
+            
+        }
+        
+        pre = predessor;
+        suc = successor;
+        
+    }
