@@ -1,0 +1,33 @@
+
+class Solution {
+public:
+
+    TreeNode* LCS(TreeNode* root, TreeNode* p, TreeNode* q){
+
+        if(root == NULL) return NULL;
+
+        // In BST we will move towards the p and q, where there will be node from where we have to divide to two different directions, then
+        // that node will be our answer, return that
+
+        if((p->val > root->val && q->val < root->val ) || (p->val < root->val && q->val > root->val)){
+            return root;
+        }
+
+        // Two nodes p and q are moving towards, same direction i.e. right
+        if((p->val > root->val) && ( q->val > root->val)){
+            return LCS(root->right,p,q);
+        }
+
+       // Two nodes p and q are moving towards, same direction i.e. left
+        if(p->val < root->val && q->val < root->val){
+            return LCS(root->left,p,q);
+        }
+        return root;
+}
+
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        
+        return LCS(root,p,q);
+
+    }
+};
