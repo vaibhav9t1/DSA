@@ -1,0 +1,19 @@
+  TreeNode* build(vector<int>&preorder, int &ind, int limit){
+
+        if(ind>=preorder.size() || preorder[ind] > limit) return NULL;
+
+        TreeNode* node = new TreeNode(preorder[ind++]);
+
+        // If we are moving towards right then upperbound limit will become node value of that element itself
+        node->left = build(preorder,ind,node->val);
+
+        // If we are moving towards right then upperbound limit will become previous bound
+        node->right = build(preorder,ind,limit);
+
+        return node;
+    }
+
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        int ind = 0;
+        return build(preorder,ind,INT_MAX);
+    }
