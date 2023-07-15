@@ -5,7 +5,7 @@
         if(index >= inorder.size() || start>end) return NULL;
 
 
-        // We are find the index of that particular first element of preorder in inorder vector
+        // We are finding the index of that particular first element of preorder in inorder vector
         int position = mp[preorder[index]];
 
         // Creating a Node and putting value of root in it
