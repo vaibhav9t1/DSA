@@ -1,0 +1,25 @@
+  vector<int> postorderTraversal(TreeNode* root) {
+        vector<int> postorder;
+        if(!root) return postorder;
+
+        stack<TreeNode*> s1, s2;
+        s1.push(root);
+
+        while(!s1.empty()){
+            TreeNode* Node = s1.top();
+            s1.pop();
+            s2.push(Node);
+
+            if(Node->left) s1.push(Node->left);
+
+            if(Node->right) s1.push(Node->right);
+        }
+
+        while(!s2.empty()){
+            postorder.push_back(s2.top()->val);
+            s2.pop();
+        }
+
+        return postorder;
+
+    }
