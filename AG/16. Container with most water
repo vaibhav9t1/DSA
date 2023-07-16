@@ -1,0 +1,43 @@
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int maxi = 0;
+
+        // Brute force find the area of water for each and every element
+
+        /*
+        for(int i=0;i<height.size();i++){
+
+            for(int j=i+1;j<height.size();j++){
+                maxi = max(min(height[i],height[j])*(j-i), maxi);
+            }
+
+        }
+
+        return maxi;
+
+        */
+
+
+        // Now In these,
+        // if L<R then L++ 
+        // if L>R then R--
+        // This will give the max answer for less than value
+
+        int l = 0, r=height.size()-1;
+
+        while(l<r){
+            int ht = min(height[l], height[r]);
+            int len = r-l;
+
+            maxi = max(maxi, ht*len);
+
+            if(height[r] < height[l]) r--;
+            else l++;
+
+        }
+
+        return maxi;
+
+    }
+};
