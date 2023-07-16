@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        
+        int sum = 0;
+
+        map<int,int> mp;
+
+        // First subarray we can get is for 0 remainder
+        mp[0]=1;
+
+        int cnt = 0;
+
+        for(int i=0;i<nums.size();i++){
+            sum += nums[i];
+
+            int remainder = sum%k;
+
+            // Handling the case for negative remainders
+            if(remainder < 0) remainder += k;
+
+            cnt += mp[remainder];
+            mp[remainder]++;
+
+        }
+
+        return cnt;
+
+    }
+};
