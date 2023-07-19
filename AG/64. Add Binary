@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        int carry = 0;
+        string res = "";
+        reverse(a.begin(),a.end());
+        reverse(b.begin(),b.end());
+
+        for(int i=0;i<max(a.size(),b.size()); i++){
+
+            int charA = i>=a.size() ? 0 : (a[i]-'0');
+            int charB = i>=b.size() ? 0 : (b[i]-'0');
+
+            int total = charA+charB+carry;
+            // If add=3 -> 1, add=2->0, add=1->1
+            string add = to_string(total%2);
+
+            res += add;
+            carry = total/2;
+        }
+
+        if(carry==1){
+            res += "1";
+        }
+
+        reverse(res.begin(),res.end());
+
+        return res;
+
+
+    }
+};
