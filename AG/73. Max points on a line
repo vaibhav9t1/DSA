@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        
+        sort(points.begin(),points.end());
+        int maxi = 1;   
+
+        // Find slope for each points
+
+        for(int i=0;i<points.size();i++){
+            map<double,int> mp;
+            for(int j=i+1;j<points.size();j++){
+                double num = (double)(points[j][1]-points[i][1]);
+                double den = (double)(points[j][0]-points[i][0]);
+                double slope = num/den;
+                cout << slope << " ";
+                mp[slope]++;
+            }
+            for(auto x:mp){
+                maxi = max(maxi, x.second+1);
+            }
+        }
+
+        return maxi;
+
+    }
+};
