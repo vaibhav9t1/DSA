@@ -1,6 +1,8 @@
+/*
 You also have two integers upperbound and lowerbound. Now you need to return how many arrays exist within the upperbound and lowerbound that analogy to your secret array.
 Two arrays are analogy if their difference between consecutive numbers are the same.
 For example, array [1, 0, 3, 0] and array [2, 1, 4, 1] are analogy. Because the difference are the same [-1, 3, -3].
+*/
 
   int solve(vector<int> A, int lowerBound, int upperBound) {
         unordered_set<int> a, b;
@@ -57,7 +59,7 @@ Explanation:
     return ans;
 }
 
-
+/*
 Given a number of nodes and a list of connected pairs, determine the weights of each isolated set of nodes assuming each node weighs 1 unit. Then for each weight calculated, sum the ceiling of its square root and return the final sum.
 
 Example:
@@ -78,7 +80,7 @@ Treate these as graphs, isolated from each other
 	
 	only {1,2,3,4,5} and {7,8} are two connected graphs.
 	
-
+*/
 int getf(int x, vector<int> &f) {
     return f[x] == x ? x : (f[x] = getf(f[x], f));
 }
