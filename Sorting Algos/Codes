@@ -56,3 +56,67 @@ Explanation:
     }
     return ans;
 }
+
+
+Given a number of nodes and a list of connected pairs, determine the weights of each isolated set of nodes assuming each node weighs 1 unit. Then for each weight calculated, sum the ceiling of its square root and return the final sum.
+
+Example:
+graph_node: 10
+graph_from = [1,1,2,3,7]
+graph_to = [2,3,4,5,8]
+
+There are graph_edges = 5 edgest to consider. there are 2 isolated sets with more than one node {1,2,3,4,5} and {7,8}. The ceilings of their square roots are 5^1/2 = 2.236 and ceil(2.36) = 3. w^1/2 = 1.41 ceil will be 2 and theo terh three isolated nodes are seperate and the square root of their weights is 1^1/2=1 respectively. The sume is 3 + 2 + (3*1) = 8
+
+Return and integer than denotes the sum of the values calculated.
+
+Example :
+Treate these as graphs, isolated from each other
+
+			1                           6          7           9        10
+	2             3                                8       
+	4             5
+	
+	only {1,2,3,4,5} and {7,8} are two connected graphs.
+	
+
+int getf(int x, vector<int> &f) {
+    return f[x] == x ? x : (f[x] = getf(f[x], f));
+}
+
+void merge(int x, int y, vector<int> &f, vector<int> &num) {
+    x = getf(x, f);
+    y = getf(y, f);
+    if (x == y) {
+        return;
+    }
+    if (num[x] > num[y]) {
+        swap(x, y);
+    }
+    num[y] += num[x];
+    f[x] = y;
+}
+
+int solution(const int n, const vector<int> &e1, const vector<int> &e2) {
+    vector<int> f(n), num(n, 1);
+    for (int i = 0; i < n; ++i) {
+        f[i] = i;
+    }
+    for (int i = 0; i < e1.size(); ++i) {
+        merge(e1[i] -  1, e2[i] - 1, f, num);
+    }
+    unordered_set<int> s;
+    int r = 0;
+    for (int i = 0; i < n; ++i) {
+        const int x = getf(i, f);
+        if (s.insert(x).second) {
+            r += ceil(sqrt(num[x]));
+        }
+    }
+    return r;
+}
+
+int main() {
+    cout << solution(10, {1, 1, 2, 3, 7}, {2, 3, 4, 5, 8}) << endl;
+    return 0;
+}
+
