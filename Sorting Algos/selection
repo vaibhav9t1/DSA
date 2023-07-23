@@ -146,6 +146,42 @@ FROM LOCATION
  = (SELECT   COUNT(*)  FROM LOCATION GROUP BY `ID` ORDEr By COUNT(*) DESC LIMIT 1))
 
 
+// Graph
+    int getf(int x, vector<int> &v) {
+    return v[x] == x ? x : (v[x] = getf(v[x], v));
+}
 
-    
+void merge(int x, int y, vector<int> &v, vector<int> &num) {
+    x = getf(x, v);
+    y = getf(y, v);
+    if (x == y) {
+        return;
+    }
+    if (num[x] > num[y]) {
+        swap(x, y);
+    }
+    num[y] += num[x];
+    v[x] = y;
+}
+
+int connectedSum(int graph_nodes, vector<int>&graph_from, vector<int> graph_to){
+
+    vector<int> v(n), num(n, 1);
+
+    for (int i = 0; i < n; ++i) {
+        v[i] = i;
+    }
+    for (int i = 0; i < graph_from.size(); ++i) {
+        merge(graph_from[i] -  1, graph_to[i] - 1, v, num);
+    }
+    unordered_set<int> s;
+    int r = 0;
+    for (int i = 0; i < n; ++i) {
+        const int x = getf(i, v);
+        if (s.insert(x).second) {
+            r += ceil(sqrt(num[x]));
+        }
+    }
+    return r;
+}
   
