@@ -130,5 +130,22 @@ int main()
         else        return "12";
     }
 
+
+// Query 
+
+SELECT P.NAME AS namy,
+       C.NAME AS company
+FROM COMPANY C
+JOIN PEOPLE P ON C.ID=P.COMPANY_ID
+WHERE LOCATION_ID IN(
+SELECT 
+`ID` 
+FROM LOCATION
+ GROUP BY `ID`
+ HAVING COUNT(*) 
+ = (SELECT   COUNT(*)  FROM LOCATION GROUP BY `ID` ORDEr By COUNT(*) DESC LIMIT 1))
+
+
+
     
   
