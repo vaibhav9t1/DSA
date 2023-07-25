@@ -1,0 +1,60 @@
+ // If A knows B then it is proved that A is not celebrity, 
+    // As celebrity doesn't know anyone in the party
+    bool Knows(int a, int b,vector<vector<int> >& M){
+        if(M[a][b] == 1) return true;
+        return false;
+    }
+    
+    int celebrity(vector<vector<int> >& M, int n) 
+    {
+        
+        stack<int> st;
+        // Push All the elements in the stack firstly
+        for(int i=0;i<n;i++) st.push(i);
+        
+        while(st.size() > 1){
+            // Take out two elements and check the above condition
+            // A Knows B then A itself is not celebrity
+            int a = st.top();
+            st.pop();
+            int b = st.top();
+            st.pop();
+            
+            // If A is not celebrity then B could be so add to stack again
+            if(Knows(a,b,M)) st.push(b);
+            else st.push(a);
+            
+        }
+        
+        // Jo element stack mein last mein bacha woh potential candidate for 
+        // become celebrity ho sakta haii
+        int candidate = st.top();
+        bool row = true, col = true;
+        
+        // If either the element in row candidate is 1 then return false
+        for(int i=0;i<n;i++){
+            if(M[candidate][i] == 1){
+                return -1;
+            }
+        }
+        
+        // All the other nodes should know the celebrity according to condition
+        // hence You should find that every column corresponding should not be 0 
+        // 0 means that other node doesn't know the celebrity
+        for(int i=0;i<n;i++){
+            // THis condition to ignore when there is diagonal Condition
+            // That is A knows A... This condition should be ignored
+            // When everyone knows 
+            if(i == candidate) continue;
+            if(M[i][candidate] == 0){
+                return -1;
+            }
+        }
+        
+        // If both row and columns are true then return candidates we expected is celebrity
+        if(row == true && col==true){
+            return candidate;
+        }
+        return -1;
+
+    }
