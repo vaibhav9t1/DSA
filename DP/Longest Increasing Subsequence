@@ -1,0 +1,79 @@
+class Solution {
+public:
+    int dp[2501][2501];
+
+    // Approach 1: using Memoization DP
+    int LIS(int ind1,int prev, vector<int>&nums){
+
+        if(ind1<0 ) return 0;
+        if(dp[ind1][prev] != -1) return dp[ind1][prev];
+
+        int len = 0;
+
+        // TAKE WHEN PREVIOUS IS LESS THAN CURRENT
+        if(nums[ind1] < nums[prev]){
+            len = max(len, 1+LIS(ind1-1,ind1,nums));
+        }
+
+        // NOT TAKE
+        len = max(len, LIS(ind1-1,prev,nums));
+
+        return dp[ind1][prev] = len;
+    }
+
+    // Approach 2: Using Two Loops - Brute Force
+    int solve1(vector<int>&nums){
+         // Every one element has subsequence of 1 firstly
+        vector<int> vec(nums.size(),1);
+
+        for(int i=0;i<nums.size();i++){
+            for(int j=i-1;j>=0;j--){
+                if(nums[j] < nums[i]){
+                    cout << nums[i] << endl;
+                    vec[i] = max(vec[j]+1,vec[i]);
+                }
+            }
+        }
+
+        // for(auto x:vec) cout << x << " ";
+
+        return *max_element(vec.begin(),vec.end());
+    }
+
+    // In these, if the increasing subsequence is there then add
+    // If not there then add it to its respective position
+    int solve3(vector<int>&nums){
+
+        // Lower_bound will find element == key in array 
+        // If not found it will find first element>key
+
+        vector<int> vec;
+        vec.push_back(nums[0]);
+        int len = 1;
+
+        for(int i=1;i<nums.size();i++){
+
+            if(nums[i] > vec.back()){
+                vec.push_back(nums[i]);
+                len++;
+            }
+            else{
+                int ind = lower_bound(vec.begin(),vec.end(),nums[i]) - vec.begin();
+                vec[ind] = nums[i];
+            }
+        }
+
+        return len;
+
+    }
+
+    int lengthOfLIS(vector<int>& nums) {
+        // nums.push_back(INT_MAX);
+        // memset(dp,-1,sizeof(dp));
+        // return LIS(nums.size()-2,nums.size()-1,nums);
+
+        return solve3(nums);
+
+       
+    }
+};
