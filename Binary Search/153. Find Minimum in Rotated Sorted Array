@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+      // This solution is based on find the sorted part either left or right
+        // Find the sorted part and take lowest element from that sorted part 
+        // And eliminate that part
+        // for eg. [4,5,7,0,1,2]  mid == 7,  then left part is sorted and then take minimum element of left part and move towards left part
+
+        int left = 0, right = nums.size()-1;
+        int ans = INT_MAX;
+
+        while(left <= right){
+
+            int mid = left + (right-left)/2;
+
+            if(nums[mid] >= nums[left]){
+                ans = min(ans, nums[left]);
+                left = mid + 1;
+            }
+            else if(nums[mid] < nums[right]){
+                ans = min(ans, nums[mid]);
+                right = mid -1;
+            }
+        }
+
+        return ans;
+    }
+};
