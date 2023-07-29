@@ -1,0 +1,40 @@
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+       
+        int low = 0, high = nums.size()-1;
+
+        while(low <= high){
+
+            int mid = low + (high-low)/2;
+
+            // If we find the answer then directly return
+            if(nums[mid] == target) return mid;
+
+            // If left part is sorted
+            if(nums[low] <= nums[mid]){
+                // If left part is sorted and search element is in that part move towards left part
+                if(target>=nums[low] && target<=nums[mid]){
+                    high = mid - 1;
+                }
+                // If left part is sorted but element is not present in that part then move towards right part
+                else low = mid + 1;
+
+            }
+            // If right part is sorted
+            else{
+                // If right part is sorted and search element is in that part move towards right part
+                if(target>nums[mid] && target<=nums[high]){
+                    low = mid + 1;
+                }
+                // If right part is sorted but element is not present in that part then move towards left part
+                else{
+                    high = mid -1 ;
+                }
+            }
+        }
+
+        return -1;
+
+    }
+};
