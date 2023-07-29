@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        // We are doing these just to eliminate edge cases!!
+        if(nums.size()==1) return nums[0];
+        if(nums[0] != nums[1]) return nums[0];
+        if(nums[nums.size()-1] != nums[nums.size()-2]) return nums[nums.size()-1];
+
+        // We are eliminated edge cases, hence to avoid overflow we avoided edge cases and started l=1 and r=n-2
+        int l = 1, r = nums.size()-2;
+
+        while(l<=r){
+
+            int mid = l + (r-l)/2;
+
+            // If mid is even and equal part present on left side of mid then it is guranteed that element is present on right side
+            if(mid%2==0 && nums[mid]==nums[mid-1]){
+                r = mid - 1;
+            }
+            // If mid is odd and equal part present on right side of mid then it is guranteed that element is present on right side
+            else if(mid%2==1 && nums[mid]==nums[mid+1]) r = mid - 1;
+            // If mid is odd or even both cases covered and equal part present on right side or left side both cases covered of mid then it is guranteed that element is present on right side
+            else{
+                l = mid + 1;
+            }
+
+            // If mid is single element then directly return
+            if(nums[mid]!=nums[mid+1] && nums[mid]!=nums[mid-1]) return nums[mid];
+
+        }
+
+        return nums[0];
+    }
+};
