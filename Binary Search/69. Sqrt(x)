@@ -1,0 +1,42 @@
+class Solution {
+public:
+
+    // These brute force solution will O(sqrt(x)) time complexity Only...
+    int bruteforce(int x){
+        int ans = x;
+        for(int i=1;i<=x;i++){
+
+            if((long long int)i*i <= x){
+                ans = i;
+            }
+            else break;
+        }
+
+        return ans;
+
+    }
+
+    int mySqrt(int x) {        
+
+        return bruteforce(x);
+
+
+        // This will take around O(log(n)) Time Complexity Only...
+        int left = 1, right = INT_MAX;
+        int ans;
+
+        while(left<=right){
+            long long int mid = left + (right-left)/2;
+
+            if(mid*mid <= x){
+                ans = mid;
+                left = mid + 1;
+            }
+            else right = mid - 1;
+            
+        }
+
+        return ans;
+
+    }
+};
