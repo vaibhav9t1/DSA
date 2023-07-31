@@ -1,0 +1,48 @@
+class Solution {
+public:
+
+    void dfs(int ind, vector<int> adj[], vector<int>&vis){
+
+        vis[ind] = 1;
+
+        for(auto it: adj[ind]){
+            if(vis[it] == 0){
+                dfs(it,adj,vis);
+            }
+        }
+        
+    }
+
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        
+        // Here our starting Node is 1 hence we are converting it to 1 based indexing by doing minus 1 in isConnected Matrix;
+
+        vector<int> adj[isConnected.size()+1];
+
+        // Convert Adjacency Matrix to Adjacency List
+        for(int i=1;i<=isConnected.size();i++){
+            for(int j=1;j<=isConnected.size();j++){
+                if(isConnected[i-1][j-1] == 1){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+
+        int res = 0;
+        // Visited Vector, used to mark Visited
+        vector<int> vis(isConnected.size()+1,0);
+
+        // This will mark all the connected Nodes, Nodes which are not connected will not be marked as 1, DFS or BFS will traverse all the nodes in the connected graph and mark Nodes to 1 or (visited)
+        for(int i=1;i<=isConnected.size();i++){
+
+            if(vis[i] == 0){
+                dfs(i,adj,vis);
+                res++;
+            }
+        }
+
+        return res;
+
+    }
+};
