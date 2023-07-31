@@ -1,0 +1,39 @@
+// DFS Traversal
+// Depth First Search - go into depth depth and find out the answer
+
+/*
+    Given the starting node, there can be plenty of bfs traversals depending on the starting nodessss
+
+    Use Recursion to go into depth depth depth
+
+    vector<int> ans;
+    void dfs(int node,vector<int> adj[], vector<int> &vis){
+        
+        // Mark it as visited
+        // These will go to the depth depth and find out our answer
+        vis[node]  = 1;
+        ans.push_back(node);
+        
+        for(auto it: adj[node]){
+            // When it was not already visited
+            if(vis[it] == 0){
+                dfs(it,adj,vis);
+            }
+        }
+        
+    }
+    
+    vector<int> dfsOfGraph(int V, vector<int> adj[]) {
+        
+            vector<int> vis(V,0);
+            dfs(0,adj,vis);
+            return ans;
+        
+    }
+
+
+    $Space Complexity: O(N)..Recursion + O(N)..visited array
+
+    $Time Complexity: O(2E) ... Total degree of each node (Summation of Degree for each node) + O(N) .. No. of Nodes (each node recursion function is visiting) 
+
+*/
