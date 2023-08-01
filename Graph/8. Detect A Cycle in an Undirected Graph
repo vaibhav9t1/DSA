@@ -1,0 +1,80 @@
+
+*********** Using BFS *************
+
+// Store the current node and previous node in each insertion of queue
+    // visited array already present node means it was already detected by someone
+    // means it is in Cycle
+    
+    bool DetectCycle(int node,int V,vector<int>&vis, vector<int> adj[]){
+        
+        queue<pair<int,int>> q;
+        q.push({node,-1});
+        vis[node] = 1;
+        
+        while(!q.empty()){
+            
+            int node1 = q.front().first;
+            int prev = q.front().second;
+            q.pop();
+            
+            for(auto it:adj[node1]){
+                // Neglect the previous node
+                if(it==prev){
+                    continue;
+                }
+                else{
+                    // If we are visiting node second time, hence in cycle
+                    if(vis[it] == 1){
+                        return true;
+                    }
+                    else{
+                        // Store the current node and previous node
+                        q.push({it,node1});
+                        vis[it] = 1;
+                    }
+                }
+            }
+        }
+        
+        return false;
+        
+    }
+    
+    bool isCycle(int V, vector<int> adj[]) {
+        vector<int> vis(V,0);
+        
+        // This condition is very important for Graph is broken into
+        // Multiple Components
+        for(int i=0;i<V;i++){
+            if(!vis[i]){
+                if(DetectCycle(i,V,vis,adj)) return true;
+            }
+        }
+        
+        return false;
+    }
+
+/*  
+  Time Complexity: O(N + 2E)
+  Space Complexity: O(N) -- for Queue and visited DS
+*/
+
+
+
+***************** Using DFS   ********************
+
+   bool dfs(int node, int parent, vector<int> adj[],vector<int>&vis){
+        
+        vis[node] = 1;
+        
+        for(auto it:adj[node]){
+            
+            if(!vis[it]){
+                if(dfs(it,node,adj,vis)) return true;
+            }
+            else if(it != parent) return true;
+        }
+        
+        return false;
+        
+    }
