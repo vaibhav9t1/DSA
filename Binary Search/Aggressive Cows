@@ -1,0 +1,59 @@
+ bool CanWePlace(int diff,int k, vector<int>&stalls){
+        
+        int cnt = 1; // For First Cow placed;
+        int lastCow = stalls[0];
+        
+        for(int i=1;i<stalls.size();i++){
+            
+            if(stalls[i]-lastCow >= diff){
+                cnt++;
+                lastCow = stalls[i];
+            }
+        }
+        
+        if(cnt >= k) return true;
+        return false;
+        
+        
+    }
+    
+    int bruteforce(int n, int k, vector<int>&stalls){
+        int range = *max_element(stalls.begin(),stalls.end()) - *min_element(stalls.begin(),stalls.end());
+        
+        for(int i=1;i<=range;i++){
+            
+            if(CanWePlace(i,k,stalls) == true){
+                continue;
+            }
+            else return i-1;
+        }
+        
+        return 0;
+    }
+    
+    int solve(int n, int k, vector<int> &stalls) {
+    
+        sort(stalls.begin(),stalls.end());
+        int range = *max_element(stalls.begin(),stalls.end()) - *min_element(stalls.begin(),stalls.end());
+        
+        int l = 0, r = range;
+        int ans = 0 ;
+        
+        while(l<=r){
+            
+            int mid = l + (r-l)/2;
+            
+            //If it possible to place cows at mid distance then we will move
+            // to find out the greater number than current
+            if(CanWePlace(mid,k,stalls) == true){
+                ans = max(mid, ans);
+                l = mid + 1;
+            }
+            else{
+                r = mid - 1;
+            }
+        }
+        
+        return ans;
+        
+    }
