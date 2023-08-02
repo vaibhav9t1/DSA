@@ -1,0 +1,59 @@
+/************************** NUMBER OF ENCLAVES  **************************/
+
+/*
+    NOTES:
+        This problem is same as that of above one just mark all the 1's which are connected to the surface.
+        After marking this 1's we will minus out total no. of ones - 1's which are connected to the surface.
+
+
+    CODE:
+          void BoundaryOConnections(int row, int col, vector<vector<int>>&board, vector<vector<int>>&vis){
+        int n = board.size(), m = board[0].size();
+        vis[row][col] = 1;
+        
+        int delrow[] = {-1,0,1,0};
+        int delcol[] = {0,1,0,-1};
+
+        for(int i=0;i<4;i++){
+
+            int r = row + delrow[i];
+            int c = col + delcol[i];
+
+            if(r>=0 && r<n && c>=0 && c<m && board[r][c]==1 && vis[r][c]==0){
+                BoundaryOConnections(r,c,board,vis);
+            }
+
+        }
+
+    }
+
+    int numEnclaves(vector<vector<int>>& board) {
+        int n = board.size(), m = board[0].size();
+        int total_ones = 0;
+        vector<vector<int>> vis(n, vector<int>(m,0));
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if((i==0 || i==n-1 || j==m-1 || j==0) && vis[i][j]==0 && board[i][j]==1){
+                    BoundaryOConnections(i,j,board,vis);
+                }
+                if(board[i][j] == 1) total_ones++;
+            }
+        }
+
+        int ones_which_are_connected_to_surface = 0;
+
+        //Unvisited Will be the answer for our problem
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(vis[i][j] == 1 && board[i][j]==1) {
+                    cout << i<<" "<<j<<endl;
+                    ones_which_are_connected_to_surface++;
+                }
+            }
+        }
+
+        return total_ones - ones_which_are_connected_to_surface;
+
+    }
+*/
