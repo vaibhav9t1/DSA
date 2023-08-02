@@ -1,0 +1,62 @@
+class Solution {
+public:
+
+    // Bipatite means - any two nodes should have same color if we color nodes with two different
+    // colors
+
+    // Linear graphs are always Bipatite
+    // Any graph with even cycle length is bipatite
+    // Any graph with odd cycle length is not bipatite
+
+    bool bfs(int start, vector<vector<int>>& adj, vector<int>&color){
+
+        queue<int> q;
+        q.push(start);
+        color[start] = 0;
+
+        while(!q.empty()){
+
+            int node = q.front();
+            q.pop();
+
+            for(auto it:adj[node]){
+
+                // -1 means this node was not colored before
+                if(color[it] == -1){
+                    color[it] = !color[node]; // Color it with the opposite of mine like 0-->1 or 1-->0
+                    q.push(it);
+                }
+                // Means this node was colored before by different path
+                // And if the colors of adjacent nodes are same then return false straight away
+                else if(color[it] == color[node]) {
+                    return false;
+                }
+
+            }
+
+        }
+
+        return true;
+
+    }
+
+    bool isBipartite(vector<vector<int>>& graph) {
+    
+        // Created Visited and colored type of vector, which will mark whether it was already visited
+        // and colored
+        // This graph is already a Adjacency List
+        vector<int> color(graph.size(),-1);
+
+        // This graph May contain connected Components so
+        for(int i=0;i<graph.size();i++){
+            if(color[i] == -1){
+                if(bfs(i,graph,color) == false){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+
+    }
+};
