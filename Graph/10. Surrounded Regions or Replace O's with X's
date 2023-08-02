@@ -1,0 +1,70 @@
+/************************** SURROUNDED REGIONS OR REPLACE O's WITH x's  **********************/
+
+/*
+    Notes:
+        All the set of O's which are connected to the O which is present at extreme positions of Matrix, that whole set would not be possible to make X.
+        For Eg. i==0 || i==n-1 ||  j==0 || j==n-1  
+
+        Above are the some examplex of the extreme positions, all The O's connected to the extreme positions will not be able to make X in any way
+        X O X X
+        X O X X
+        X O X X        NO O IS POSSIBLE TO MAKE X HERE
+
+        X X X X
+        X O O X
+        X O X X
+        X X X X        IN THIS CASE ALL O's CAN BE CONVERTED TO X
+
+    
+    Code:
+        class Solution {
+public:
+
+    // A set X's connected to boundary O then cannot be connected
+    // Start from Boundary O's connect all the O's and tell that they can not be Marked as X
+
+    void BoundaryOConnections(int row, int col, vector<vector<char>>&board, vector<vector<int>>&vis){
+        int n = board.size(), m = board[0].size();
+        vis[row][col] = 1;
+        
+        int delrow[] = {-1,0,1,0};
+        int delcol[] = {0,1,0,-1};
+
+        for(int i=0;i<4;i++){
+
+            int r = row + delrow[i];
+            int c = col + delcol[i];
+
+            // Move towards all the four directions and go and mark them which are connected to extreme O's
+            if(r>=0 && r<n && c>=0 && c<m && board[r][c]=='O' && vis[r][c]==0){
+                BoundaryOConnections(r,c,board,vis);
+            }
+
+        }
+
+    }
+
+    void solve(vector<vector<char>>& board) {
+        int n = board.size(), m = board[0].size();
+        vector<vector<int>> vis(n, vector<int>(m,0));
+
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                // Nodes which are extreme are send for the marking their connected components as they cannot be marked X in any way
+                if((i==0 || i==n-1 || j==m-1 || j==0) && vis[i][j]==0 && board[i][j]=='O'){
+                    BoundaryOConnections(i,j,board,vis);
+                }
+            }
+        }
+
+        // The nodes which are not 1, are all can be marked as O's
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                if(vis[i][j] == 0) board[i][j] = 'X';
+            }
+        }
+
+    }
+};
+
+*/
