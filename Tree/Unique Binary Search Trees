@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+    int solve(int n,vector<int>&dp){
+
+        if(n<=1) return 1;
+
+        if(dp[n] != -1) return dp[n];
+
+        int total = 0;
+        
+        for(int i=1;i<=n;i++){
+                    // Total of let suppose 4 then answer would for each node like
+                    // 4 then for i=1 --> no_of_nodes_created_by(i-1) * no_of_nodes_created_by(n-i) NODES
+            total += solve(n-i,dp) * solve(i-1,dp);
+        }
+
+        return dp[n] = total;
+    }
+
+    int numTrees(int n) {
+        /*
+            if we want to calculate for 4: then
+                numTrees[4] =  numTrees(0) * numTrees(3) + 
+                            = numTrees(1) * numTrees(2) + 
+                            = numTrees(2) * numTrees(1) +
+                            = numTrees(3) * numTrees(0);
+        */        
+        vector<int> dp(n+1,-1);
+        return solve(n,dp);
+    }
+};
